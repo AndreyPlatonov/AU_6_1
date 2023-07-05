@@ -10,10 +10,10 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
-    private ElementsCollection cards = $$(".list__item div");
+    private final static ElementsCollection cards = $$(".list__item div");
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
-    private SelenideElement header = $("[data-test-id=dashboard]");
+    private final SelenideElement header = $("[data-test-id=dashboard]");
 
     public DashboardPage() {
 
@@ -30,12 +30,16 @@ public class DashboardPage {
                 text = element.getText();
                 break;
             }
+
         }
 
         return extractBalance(text);
     }
 
+    public static String getCardIdById(int id) {
 
+        return cards.get(id).getAttribute("data-test-id");
+    }
 
     private int extractBalance(String text) {
         val start = text.indexOf(balanceStart);
@@ -44,22 +48,11 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public TransferMoneyPage transfer(DataHelper.Card id) {
+    public TransferMoneyPage transfer(DataHelper.Card card) {
 
-        for (int i = 0; i < cards.size(); i++) {
+        cards.get(card.getId()).$("button").click();
 
-            String cardId = "";
-            cardId = cards.get(i).getAttribute("data-test-id");
-            if (cardId.equals(id)) {
-                cards.get(i).$("button").click();
-
-                break;
-
-
-            }
-        }
-
-        return new TransferMoneyPage();
+        return new TransferMoneyPage(card);
 
     }
 }

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.LoginPage;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class MoneyTransferTest {
@@ -22,6 +21,8 @@ public class MoneyTransferTest {
         var verificationPage= LoginPage.validLogin(authInfo);
         var verificationCode=DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage=verificationPage.validVerify(verificationCode);
-        dashboardPage.transfer();
+        var card =DataHelper.getFirstCard();
+        var transferMoneyPage=dashboardPage.transfer(card);
+
     }
 }
