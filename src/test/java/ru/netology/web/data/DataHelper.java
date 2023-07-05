@@ -35,14 +35,14 @@ public class DataHelper {
         private int id;
         private String cardNumber;
         private String cardID;
-
+        private int cardBalance;
     }
 
     public static Card getFirstCard(){
-        return new Card(0, "5559 0000 0000 0001", DashboardPage.getCardIdById(0));
+        return new Card(0, "5559 0000 0000 0001", DashboardPage.getCardIdById(0),DashboardPage.getCardBalance(DashboardPage.getCardIdById(0)));
     }
 
     public static Card getSecondCard(){
-        return new Card(1, "5559 0000 0000 0002", DashboardPage.getCardIdById(1));
+        return new Card(1, "5559 0000 0000 0002", DashboardPage.getCardIdById(1),DashboardPage.getCardBalance(DashboardPage.getCardIdById(1)));
     }
 }

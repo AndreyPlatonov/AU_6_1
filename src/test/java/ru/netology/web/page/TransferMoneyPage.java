@@ -14,7 +14,7 @@ public class TransferMoneyPage {
     private static SelenideElement cardFrom = $("[data-test-id=from] input");
     private static SelenideElement transferButton = $("[data-test-id=action-transfer].button");
 
-    private  TransferMoneyPage() {
+    private TransferMoneyPage() {
 
     }
 
@@ -24,8 +24,26 @@ public class TransferMoneyPage {
         cardTo.shouldHave(Condition.disabled);
         cardFrom.shouldHave(Condition.editable);
         amount.shouldHave(Condition.editable);
-        cardTo.shouldHave(Condition.value("**** **** **** 000"+String.valueOf(card.getId()+1)));
+        cardTo.shouldHave(Condition.value("**** **** **** 000" + String.valueOf(card.getId() + 1)));
 
     }
 
+    public boolean checkBalanceForTransfer(int amount, DataHelper.Card cardTo, DataHelper.Card cardFrom) {
+
+        if (cardTo.getId() == cardFrom.getId()) {
+            return true;
+        } else {
+
+            if (amount > cardFrom.getCardBalance()) {
+
+                return false;
+
+            } else {
+
+                return true;
+            }
+
+        }
+
+    }
 }
