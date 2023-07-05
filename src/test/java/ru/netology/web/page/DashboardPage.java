@@ -16,15 +16,17 @@ public class DashboardPage {
     private final static ElementsCollection cards = $$(".list__item div");
     private static final String balanceStart = "баланс: ";
     private static final String balanceFinish = " р.";
-    private final SelenideElement header = $("[data-test-id=dashboard]");
+    final SelenideElement header = $("[data-test-id=dashboard]");
+
 
     public DashboardPage() {
 
         header.shouldBe(Condition.visible);
+
     }
 
 
-    public static int getCardBalance(String id) {
+    public  static int getCardBalance(String id) {
 
         String text = "Something Wrong!";
 
@@ -33,7 +35,7 @@ public class DashboardPage {
 
             if (cardID.equals(id)) {
                 text = element.getText();
-                break;
+
             }
 
         }
@@ -41,7 +43,7 @@ public class DashboardPage {
         return extractBalance(text);
     }
 
-    public static String getCardIdById(int id) {
+    public  static String getCardIdById(int id) {
 
         return cards.get(id).getAttribute("data-test-id");
     }

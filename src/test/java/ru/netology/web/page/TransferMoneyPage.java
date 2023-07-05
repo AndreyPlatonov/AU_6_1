@@ -8,15 +8,14 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class TransferMoneyPage {
 
-    private static SelenideElement header = $("[data-test-id=dashboard]");
-    private static SelenideElement amount = $("[data-test-id=amount] input");
-    private static SelenideElement cardTo = $("[data-test-id=to] input");
-    private static SelenideElement cardFrom = $("[data-test-id=from] input");
-    private static SelenideElement transferButton = $("[data-test-id=action-transfer].button");
+    public SelenideElement header = $("[data-test-id=dashboard]");
+    public static SelenideElement amount = $("[data-test-id=amount] input");
+    public SelenideElement cardTo = $("[data-test-id=to] input");
+    public static SelenideElement cardFrom = $("[data-test-id=from] input");
+    public static SelenideElement transferButton = $("[data-test-id=action-transfer].button");
 
-    private TransferMoneyPage() {
 
-    }
+
 
     public TransferMoneyPage(DataHelper.Card card) {
 
@@ -24,24 +23,33 @@ public class TransferMoneyPage {
         cardTo.shouldHave(Condition.disabled);
         cardFrom.shouldHave(Condition.editable);
         amount.shouldHave(Condition.editable);
-        cardTo.shouldHave(Condition.value("**** **** **** 000" + String.valueOf(card.getId() + 1)));
+        String s = Integer.toString(card.getId() + 1);
+        cardTo.shouldHave(Condition.value("**** **** **** 000" + s));
 
     }
 
-    public boolean checkBalanceForTransfer(int amount, DataHelper.Card cardTo, DataHelper.Card cardFrom) {
+    public static boolean checkBalanceForTransfer(int amount, DataHelper.Card cardFrom, DataHelper.Card cardTo) {
 
-        if (cardTo.getId() == cardFrom.getId()) {
+        if (cardTo.getId() == cardFrom.getId() || amount <= cardFrom.getCardBalance()) {
+
             return true;
-        } else {
+        }
 
-            if (amount > cardFrom.getCardBalance()) {
+        return false;
 
-                return false;
+    }
 
-            } else {
+    public  void validTransfer(int amountTransfer,  DataHelper.Card cardFromTransfer, DataHelper.Card cardToTransfer) {
 
-                return true;
-            }
+        if (checkBalanceForTransfer(amountTransfer, cardFromTransfer, cardToTransfer)) {
+
+            String s = Integer.toString(amountTransfer);
+            amount.setValue(s);
+            cardFrom.setValue(cardFromTransfer.getCardNumber());
+
+            transferButton.click();
+
+
 
         }
 
