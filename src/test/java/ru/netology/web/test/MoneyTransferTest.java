@@ -51,7 +51,7 @@ public class MoneyTransferTest {
 
     @Test
 
-    public void shouldTransferMoneyBetweenOwnCardsFailed(){
+    public void shouldTransferMoneyBetweenOwnCardsFailed() {
 
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = LoginPage.validLogin(authInfo);
@@ -59,7 +59,7 @@ public class MoneyTransferTest {
         verificationPage.validVerify(verificationCode);
         var cardFrom = DataHelper.getFirstCard();
         var cardTo = DataHelper.getSecondCard();
-        var sumTransfer=DataHelper.sumInvalidTransfer(cardFrom);
+        var sumTransfer = DataHelper.sumInvalidTransfer(cardFrom);
 
         int expectedCardFromBalance = cardFrom.getCardBalance();
         int expectedCardToBalance = cardTo.getCardBalance();
@@ -91,11 +91,11 @@ public class MoneyTransferTest {
 
         DashboardPage.transfer(cardFrom);
 
-        if (!(TransferMoneyPage.checkBalanceForTransfer(DataHelper.sumTransfer(), cardFrom,cardTo))){
+        if (!(TransferMoneyPage.checkBalanceForTransfer(DataHelper.sumTransfer(), cardFrom, cardTo))) {
 
-            DataHelper.Card cardTmp=cardFrom;
-            cardFrom=cardTo;
-            cardTo=cardTmp;
+            DataHelper.Card cardTmp = cardFrom;
+            cardFrom = cardTo;
+            cardTo = cardTmp;
 
             expectedCardFromBalance = cardFrom.getCardBalance() - DataHelper.sumTransfer();
             expectedCardToBalance = cardTo.getCardBalance() + DataHelper.sumTransfer();

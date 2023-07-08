@@ -23,7 +23,7 @@ public class DashboardPage {
 
     }
 
-    public static boolean emptyCards(){
+    public static boolean emptyCards() {
 
         return cards.isEmpty();
     }

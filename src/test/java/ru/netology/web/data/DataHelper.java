@@ -56,7 +56,7 @@ public class DataHelper {
 
     public static int sumInvalidTransfer(Card card) {
 
-        return Math.abs(card.getCardBalance())+100;
+        return Math.abs(card.getCardBalance()) + 100;
 
     }
 
