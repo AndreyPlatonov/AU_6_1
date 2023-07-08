@@ -23,4 +23,13 @@ public class VerificationPage {
         return new DashboardPage();
 
     }
+
+    public void invalidVerify(DataHelper.VerificationCode verificationCode) {
+
+        codeField.setValue(verificationCode.getCode());
+        verifyButton.click();
+        $("[data-test-id=error-notification] .notification__content").shouldHave(Condition.exactText("Ошибка! Неверно указан код! Попробуйте ещё раз.")).shouldBe(Condition.visible);
+
+
+    }
 }

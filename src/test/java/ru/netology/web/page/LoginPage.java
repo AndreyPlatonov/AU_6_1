@@ -1,5 +1,6 @@
 package ru.netology.web.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.web.data.DataHelper;
 
@@ -18,6 +19,16 @@ public class LoginPage {
         loginButton.click();
 
         return new VerificationPage();
+
+    }
+
+    public static void invalidLogin(DataHelper.AuthInfo infoClient) {
+
+        loginField.setValue(infoClient.getLogin());
+        passwordField.setValue(infoClient.getPassword());
+        loginButton.click();
+
+        $("[data-test-id=error-notification] .notification__content").shouldHave(Condition.exactText("Ошибка! Неверно указан логин или пароль")).shouldBe(Condition.visible);
 
     }
 }

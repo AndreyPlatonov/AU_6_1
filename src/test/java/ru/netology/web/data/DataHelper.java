@@ -18,18 +18,27 @@ public class DataHelper {
         return new AuthInfo("vasya", "qwerty123");
     }
 
-    public static AuthInfo getOtherAuthInfo(AuthInfo original) {
+    public static AuthInfo getOtherAuthInfo() {
         return new AuthInfo("petya", "123qwerty");
+    }
+
+    public static AuthInfo invalidAuthInfo() {
+        return new AuthInfo("elena", "qwerty");
     }
 
     @Value
     public static class VerificationCode {
-        public  String code;
+        public String code;
     }
 
     public static VerificationCode getVerificationCodeFor(AuthInfo authInfo) {
         return new VerificationCode("12345");
     }
+
+    public static VerificationCode getInvalidVerificationCodeFor(AuthInfo authInfo) {
+        return new VerificationCode("54321");
+    }
+
 
     @Value
     public static class Card {
@@ -40,6 +49,16 @@ public class DataHelper {
 
     }
 
+    public static int sumTransfer() {
+
+        return 100;
+    }
+
+    public static int sumInvalidTransfer(Card card) {
+
+        return Math.abs(card.getCardBalance())+100;
+
+    }
 
     public static Card getFirstCard() {
         return new Card(0, "5559 0000 0000 0001", DashboardPage.getCardIdById(0), DashboardPage.getCardBalance(DashboardPage.getCardIdById(0)));

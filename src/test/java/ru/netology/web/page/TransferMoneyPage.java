@@ -13,9 +13,11 @@ public class TransferMoneyPage {
     public SelenideElement cardTo = $("[data-test-id=to] input");
     public static SelenideElement cardFrom = $("[data-test-id=from] input");
     public static SelenideElement transferButton = $("[data-test-id=action-transfer].button");
+    public static SelenideElement cancelButton = $("[data-test-id=action-cancel].button");
 
+    private TransferMoneyPage() {
 
-
+    }
 
     public TransferMoneyPage(DataHelper.Card card) {
 
@@ -30,16 +32,11 @@ public class TransferMoneyPage {
 
     public static boolean checkBalanceForTransfer(int amount, DataHelper.Card cardFrom, DataHelper.Card cardTo) {
 
-        if (cardTo.getId() == cardFrom.getId() || amount <= cardFrom.getCardBalance()) {
-
-            return true;
-        }
-
-        return false;
+        return cardTo.getId() == cardFrom.getId() || amount <= cardFrom.getCardBalance();
 
     }
 
-    public  void validTransfer(int amountTransfer,  DataHelper.Card cardFromTransfer, DataHelper.Card cardToTransfer) {
+    public static void validTransfer(int amountTransfer, DataHelper.Card cardFromTransfer, DataHelper.Card cardToTransfer) {
 
         if (checkBalanceForTransfer(amountTransfer, cardFromTransfer, cardToTransfer)) {
 
@@ -49,9 +46,19 @@ public class TransferMoneyPage {
 
             transferButton.click();
 
-
-
+        } else {
+            cancelButton.click();
         }
 
+    }
+
+    public static DashboardPage invalidTransfer(int amountTransfer, DataHelper.Card cardFromTransfer) {
+
+        String s = Integer.toString(amountTransfer);
+        amount.setValue(s);
+        cardFrom.setValue(cardFromTransfer.getCardNumber());
+        transferButton.click();
+
+        return new DashboardPage();
     }
 }
